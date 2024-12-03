@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nagy Tesz József - Digitális Névjegykártya</title>
+    <meta name="description" content="Üdv mindenkinek!">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    /* Reset & Base Styles */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #14B8A6;
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --background: #ffffff;
+      --surface: #f8f9fa;
+      --border: #e5e7eb;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      color: var(--text-primary);
+      background: var(--surface);
+      min-height: 100vh;
+    }
+
+    /* Desktop Layout */
+    .card-container {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .digital-card {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      width: 100%;
+      background: var(--background);
+      box-shadow: var(--shadow);
+    }
+
+    /* Left Panel */
+    .left-panel {
+      background: linear-gradient(135deg, var(--primary-color), #14B8A622);
+      color: white;
+      padding: 3rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .profile-section {
+      text-align: center;
+    }
+
+    .profile-image {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: var(--shadow);
+      margin: 0 auto 1.5rem;
+      object-fit: cover;
+      background: white;
+    }
+
+    .profile-placeholder {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid white;
+      margin: 0 auto 1.5rem;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+    }
+
+    .monogram {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .profile-section h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-section p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .contact-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: white;
+      text-decoration: none;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .contact-item:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateX(4px);
+    }
+
+    .contact-item i {
+      font-size: 1.25rem;
+    }
+
+    /* Right Panel */
+    .right-panel {
+      padding: 3rem;
+      background: var(--background);
+      overflow-y: auto;
+    }
+
+    .section {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .section h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .section p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Social Links */
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .social-link {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-color);
+      background: color-mix(in srgb, var(--brand-color) 15%, white);
+      transition: transform 0.2s;
+      text-decoration: none;
+      font-size: 1.25rem;
+    }
+
+    .social-link:hover {
+      transform: scale(1.1);
+    }
+
+    /* QR Code Section */
+    .qr-section {
+      text-align: center;
+    }
+
+    .qr-code {
+      width: 240px;
+      height: 240px;
+      margin: 1.5rem auto;
+      padding: 1rem;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .qr-code img {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Action Buttons */
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .action-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      border-radius: var(--radius);
+      border: none;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .action-button.primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .action-button.secondary {
+      background: white;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+    }
+
+    .action-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    /* Mobile Layout */
+    @media (max-width: 1024px) {
+      .digital-card {
+        grid-template-columns: 1fr;
+      }
+
+      .left-panel {
+        padding: 2rem;
+      }
+
+      .right-panel {
+        padding: 2rem;
+      }
+
+      .profile-image,
+      .profile-placeholder {
+        width: 140px;
+        height: 140px;
+      }
+
+      .monogram {
+        font-size: 2rem;
+      }
+
+      .profile-section h1 {
+        font-size: 1.75rem;
+      }
+
+      .section h2 {
+        font-size: 1.25rem;
+      }
+
+      .qr-code {
+        width: 200px;
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .left-panel,
+      .right-panel {
+        padding: 1.5rem;
+      }
+
+      .profile-image,
+      .profile-placeholder {
+        width: 120px;
+        height: 120px;
+      }
+
+      .monogram {
+        font-size: 1.75rem;
+      }
+
+      .profile-section h1 {
+        font-size: 1.5rem;
+      }
+
+      .section {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+      }
+
+      .social-link {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="digital-card">
+            <!-- Left Panel -->
+            <div class="left-panel">
+                <div class="profile-section">
+                    <div class="profile-placeholder">
+                           <span class="monogram">NTJ</span>
+                         </div>
+                    <h1>Nagy Tesz József</h1>
+                    <p>Üzletköző - Teszt Kft</p>
+                </div>
+
+                <div class="contact-section">
+                    
+                    <a href="tel:+36 30 123 4567" class="contact-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>+36 30 123 4567</span>
+                    </a>
+                    
+                    
+                    
+                    
+                    
+                    <a href="mailto:romowim112@jonespal.com" class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>romowim112@jonespal.com</span>
+                    </a>
+                    
+                    
+                    
+                    <a href="https://temp-mail.org/en/" target="_blank" class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <span>https://temp-mail.org/en/</span>
+                    </a>
+                    
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="right-panel">
+                
+                <div class="section">
+                    <h2>Bemutatkozás</h2>
+                    <p>Üdv mindenkinek!</p>
+                </div>
+                
+
+                
+                <div class="section">
+                    <h2>Közösségi média</h2>
+                    <div class="social-links">
+                        
+        <a href="asdsad" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="social-link"
+           style="--brand-color: #1877F2"
+           title="Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      
+                    </div>
+                </div>
+                
+
+                <div class="section qr-section">
+                    <h2>Névjegykártya QR kód</h2>
+                    <div class="qr-code">
+                        <img src="data:image/png;base64,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" alt="QR kód">
+                    </div>
+                    <p>Olvassa be a QR kódot a névjegy mentéséhez</p>
+                </div>
+
+                <div class="actions">
+                    <button onclick="downloadVCard()" class="action-button primary">
+                        <i class="fas fa-address-card"></i>
+                        Névjegy mentése
+                    </button>
+                    <button onclick="shareCard()" class="action-button secondary">
+                        <i class="fas fa-share-alt"></i>
+                        Megosztás
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function downloadVCard() {
+        const vcard = `BEGIN:VCARD
+VERSION:3.0
+N:Nagy;Tesz József;;;
+FN:Nagy Tesz József
+ORG:Teszt Kft
+TITLE:Üzletköző
+TEL;TYPE=CELL:+36 30 123 4567
+
+
+EMAIL:romowim112@jonespal.com
+URL:https://temp-mail.org/en/
+
+NOTE:Üdv mindenkinek!
+URL;type=Facebook:asdsad
+END:VCARD`;
+        const blob = new Blob([vcard], { type: 'text/vcard' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Nagy_Tesz_József.vcf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+    }
+
+    async function shareCard() {
+        const shareData = {
+            title: 'Nagy Tesz József - Digitális Névjegykártya',
+            text: 'Nagy Tesz József digitális névjegykártyája',
+            url: window.location.href
+        };
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('A névjegykártya linkje a vágólapra másolva!');
+            }
+        } catch (err) {
+            console.error('Megosztás sikertelen:', err);
+        }
+    }
+    </script>
+</body>
+</html>
